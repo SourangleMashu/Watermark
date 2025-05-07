@@ -35,15 +35,10 @@
     void Watermark::resizeEvent(QResizeEvent* event) {
         QMainWindow::resizeEvent(event);
 
-        // Re-scale the image to fit the label
         if (!textImage.isNull()) {
-            QPixmap scaled = QPixmap::fromImage(textImage).scaled(
-                ui->imageLabel->size(),
-                Qt::KeepAspectRatio,
-                Qt::SmoothTransformation);
-
-            ui->imageLabel->setPixmap(scaled);
-        }
+            QPixmap pix(QPixmap::fromImage(image));
+            ui->imageLabel->setPixmap(pix.scaled(ui->imageLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        }   
     }
 
     void Watermark::onChooseButtonClicked() {
@@ -87,8 +82,9 @@
         
         cv::Mat mat(background.height(), background.width(), CV_8UC4, (void*)background.bits(), background.bytesPerLine());
         cv::Mat small;
-        cv::resize(mat, small, cv::Size(), 0.25, 0.25);
-        cv::GaussianBlur(small, small, cv::Size(0, 0), 30);
+        cv::resize(mat, small, cv::Size(), 0.10, 0.10);
+        small.convertTo(small, -1, 0.9, 0);
+        cv::GaussianBlur(small, small, cv::Size(0, 0), 15);
         cv::resize(small, mat, mat.size());
         background = QImage((const uchar*)mat.data, mat.cols, mat.rows, mat.step, QImage::Format_ARGB32).copy();
 
