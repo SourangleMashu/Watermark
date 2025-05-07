@@ -1,4 +1,6 @@
 <RCC>
-    <qresource prefix="Watermark">
+    <qresource prefix="/Watermark">
+        <file>temp1.jpg</file>
+        <file>temp2.jpg</file>
     </qresource>
 </RCC>

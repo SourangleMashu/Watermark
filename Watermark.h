@@ -13,12 +13,6 @@ public:
     ~Watermark();
 
 private slots:
-    QImage image;
-    QImage editedImage; 
-    QImage textImage;
-    QImage background;
-    QColor color;
-
     void onChooseButtonClicked();
     void onApplyButtonClicked();
     void onSaveButtonClicked();
@@ -26,12 +20,30 @@ private slots:
 
     void onTemplate1ButtonClicked();
     void onTemplate2ButtonClicked();
+    void onTemplate3ButtonClicked();
 
-    void apply();
-    void addMargin(QImage background, double xMarginRatio, double yMarginRatio, double centerXRatio, double centerYRatio);
 
 private:
     Ui_WatermarkClass* ui;
+
+    QImage image;
+    QImage editedImage;
+    QImage textImage;
+    QImage background;
+    QColor color;
+
+    void apply();
+
+    QImage addMargin(const QImage image, const QImage background,
+                     double xMarginRatio, double yMarginRatio,
+                     double centerXRatio, double centerYRatio);
+
+    QImage blurBackground(const QImage image);
+
+    QImage roundCorners(const QImage image, double radiusR);
+
+    QImage addText(QImage image, QString text, QString font, double sizeR, bool isBold, bool isWhite, double xR, double yR);
+
 
 protected:
     void resizeEvent(QResizeEvent* event) override;

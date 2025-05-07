@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -35,6 +35,9 @@
       </property>
       <property name="text">
        <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignCenter</set>
       </property>
      </widget>
     </item>
@@ -239,15 +242,15 @@
         <item>
          <widget class="QToolBox" name="toolBox">
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="templatePage">
            <property name="geometry">
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>98</width>
-             <height>74</height>
+             <width>200</width>
+             <height>636</height>
             </rect>
            </property>
            <attribute name="label">
@@ -276,8 +279,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>98</width>
-                 <height>247</height>
+                 <width>180</width>
+                 <height>616</height>
                 </rect>
                </property>
                <property name="sizePolicy">
@@ -317,8 +320,8 @@
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset>
-                    <normaloff>temp1.jpg</normaloff>temp1.jpg</iconset>
+                   <iconset resource="Watermark.qrc">
+                    <normaloff>:/Watermark/temp1.jpg</normaloff>:/Watermark/temp1.jpg</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -346,14 +349,21 @@
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset>
-                    <normaloff>temp2.jpg</normaloff>temp2.jpg</iconset>
+                   <iconset resource="Watermark.qrc">
+                    <normaloff>:/Watermark/temp2.jpg</normaloff>:/Watermark/temp2.jpg</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
                     <width>145</width>
                     <height>115</height>
                    </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="template3Button">
+                  <property name="text">
+                   <string/>
                   </property>
                  </widget>
                 </item>
@@ -377,100 +387,146 @@
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_10">
             <item>
-             <widget class="QLabel" name="label_2">
+             <widget class="QGroupBox" name="groupBox">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <property name="text">
-               <string>Shutter:</string>
+              <property name="title">
+               <string>Shutter Speed:</string>
               </property>
+              <layout class="QVBoxLayout" name="verticalLayout">
+               <item>
+                <widget class="QLineEdit" name="ssLineEdit"/>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit_3"/>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_3">
+             <widget class="QGroupBox" name="groupBox_2">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <property name="text">
+              <property name="title">
                <string>Aperture:</string>
               </property>
+              <layout class="QVBoxLayout" name="verticalLayout_2">
+               <item>
+                <widget class="QLineEdit" name="fLineEdit"/>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit_4"/>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_4">
+             <widget class="QGroupBox" name="groupBox_3">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <property name="text">
+              <property name="title">
                <string>ISO:</string>
               </property>
+              <layout class="QVBoxLayout" name="verticalLayout_3">
+               <item>
+                <widget class="QLineEdit" name="isoLineEdit"/>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit_5"/>
-            </item>
-            <item>
-             <widget class="QLabel" name="label">
+             <widget class="QGroupBox" name="groupBox_4">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <property name="text">
+              <property name="title">
                <string>Brand:</string>
               </property>
+              <layout class="QVBoxLayout" name="verticalLayout_4">
+               <item>
+                <widget class="QComboBox" name="brandComboBox">
+                 <item>
+                  <property name="text">
+                   <string>Choose Brand...</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Nikon</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Canon</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Sony</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="comboBox"/>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_5">
+             <widget class="QGroupBox" name="groupBox_5">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <property name="text">
+              <property name="title">
                <string>Camera:</string>
               </property>
+              <layout class="QVBoxLayout" name="verticalLayout_5">
+               <item>
+                <widget class="QLineEdit" name="cameraLineEdit"/>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit_6"/>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_6">
+             <widget class="QGroupBox" name="groupBox_6">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <property name="text">
+              <property name="title">
                <string>Lens:</string>
               </property>
+              <layout class="QVBoxLayout" name="verticalLayout_11">
+               <item>
+                <widget class="QLineEdit" name="lensLineEdit"/>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit_2"/>
+             <spacer name="verticalSpacer">
+              <property name="orientation">
+               <enum>Qt::Orientation::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
             </item>
            </layout>
           </widget>
