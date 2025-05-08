@@ -16,4 +16,4 @@ Blurry image background + shooting configurations:
 
 Blurry image background + shooting configurations + Camera Brand:
 
-<img src="images/temp4.jpg" height="800"/>
+<img src="images/temp4.jpg" width="500"/>
