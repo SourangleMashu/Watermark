@@ -1,6 +1,10 @@
 <RCC>
     <qresource prefix="/Watermark">
-        <file>temp1.jpg</file>
-        <file>temp2.jpg</file>
+        <file>images/icon.png</file>
+        <file>images/nikonLogo.png</file>
+        <file>images/nikonLogoText.png</file>
+        <file>images/temp1.jpg</file>
+        <file>images/temp2.jpg</file>
+        <file>images/temp3.jpg</file>
     </qresource>
 </RCC>

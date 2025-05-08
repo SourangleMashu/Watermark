@@ -20,8 +20,8 @@
    <string>Watermark</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>icon.png</normaloff>icon.png</iconset>
+   <iconset resource="Watermark.qrc">
+    <normaloff>:/Watermark/images/icon.png</normaloff>:/Watermark/images/icon.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -321,7 +321,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="Watermark.qrc">
-                    <normaloff>:/Watermark/temp1.jpg</normaloff>:/Watermark/temp1.jpg</iconset>
+                    <normaloff>:/Watermark/images/temp1.jpg</normaloff>:/Watermark/images/temp1.jpg</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -350,7 +350,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="Watermark.qrc">
-                    <normaloff>:/Watermark/temp2.jpg</normaloff>:/Watermark/temp2.jpg</iconset>
+                    <normaloff>:/Watermark/images/temp2.jpg</normaloff>:/Watermark/images/temp2.jpg</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -364,6 +364,16 @@
                  <widget class="QPushButton" name="template3Button">
                   <property name="text">
                    <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="Watermark.qrc">
+                    <normaloff>:/Watermark/images/temp3.jpg</normaloff>:/Watermark/images/temp3.jpg</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>145</width>
+                    <height>115</height>
+                   </size>
                   </property>
                  </widget>
                 </item>
@@ -399,7 +409,11 @@
               </property>
               <layout class="QVBoxLayout" name="verticalLayout">
                <item>
-                <widget class="QLineEdit" name="ssLineEdit"/>
+                <widget class="QLineEdit" name="ssLineEdit">
+                 <property name="text">
+                  <string>1/60</string>
+                 </property>
+                </widget>
                </item>
               </layout>
              </widget>
@@ -417,7 +431,11 @@
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_2">
                <item>
-                <widget class="QLineEdit" name="fLineEdit"/>
+                <widget class="QLineEdit" name="fLineEdit">
+                 <property name="text">
+                  <string>f4</string>
+                 </property>
+                </widget>
                </item>
               </layout>
              </widget>
@@ -435,7 +453,11 @@
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_3">
                <item>
-                <widget class="QLineEdit" name="isoLineEdit"/>
+                <widget class="QLineEdit" name="isoLineEdit">
+                 <property name="text">
+                  <string>800</string>
+                 </property>
+                </widget>
                </item>
               </layout>
              </widget>
@@ -492,7 +514,11 @@
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_5">
                <item>
-                <widget class="QLineEdit" name="cameraLineEdit"/>
+                <widget class="QLineEdit" name="cameraLineEdit">
+                 <property name="text">
+                  <string>Z6</string>
+                 </property>
+                </widget>
                </item>
               </layout>
              </widget>
@@ -510,7 +536,11 @@
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_11">
                <item>
-                <widget class="QLineEdit" name="lensLineEdit"/>
+                <widget class="QLineEdit" name="lensLineEdit">
+                 <property name="text">
+                  <string>24-120</string>
+                 </property>
+                </widget>
                </item>
               </layout>
              </widget>

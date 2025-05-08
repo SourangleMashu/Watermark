@@ -12,7 +12,7 @@
     #include <qcolordialog.h>
     #include <qpainterpath.h>
 
-#include <opencv2/opencv.hpp>
+    #include <opencv2/opencv.hpp>
 
     Watermark::Watermark(QWidget* parent)
         : QMainWindow(parent)
@@ -98,9 +98,18 @@
         QImage background = blurBackground(image).copy();
 
         editedImage = addMargin(image, background, 0.07, 0.15, 0.5, 0.4).copy();
+        editedImage = roundCorners(editedImage, 0.03).copy();
 
-        editedImage = addText(editedImage, ui->ssLineEdit->text(), "Segeo UI", 0.02, false, true, 0.1, 0.8).copy();
-            
+        editedImage = addText(editedImage, ui->ssLineEdit->text(), "Segoe UI", 0.03, 0.1, false, true, Qt::white, Qt::AlignLeft | Qt::AlignBottom, 0.3, 0.0, 0.3, 0.05).copy();
+        editedImage = addText(editedImage, ui->fLineEdit->text(), "Segoe UI", 0.03, 0.1, false, true, Qt::white, Qt::AlignCenter | Qt::AlignBottom, 0.3, 0.0, 0.3, 0.05).copy();
+        editedImage = addText(editedImage, ui->isoLineEdit->text(), "Segoe UI", 0.03, 0.1, false, true, Qt::white, Qt::AlignRight | Qt::AlignBottom, 0.3, 0.0, 0.3, 0.05).copy();
+
+        QImage logo;
+        if (ui->brandComboBox->currentIndex() == 1)
+            logo = QImage(":/Watermark/images/nikonLogoText.png");
+        
+        editedImage = addLogo(editedImage, logo, 1.2, 0.5, 0.83);
+
         apply();
     }
 
@@ -184,25 +193,52 @@
         return result;
     }
 
-    QImage Watermark::addText(QImage image, QString text, QString font, double sizeR, bool isBold, bool isWhite, double xR, double yR) {
+    QImage Watermark::addText(QImage image, const QString text, QString font, double sizeR,double weightR, bool isItalic, bool isShadowed, QColor color, Qt::Alignment alignment,
+        double leftR, double topR, double rightR, double bottomR) {
+
         QImage result = image.copy();
+
         QPainter painter(&result);
         painter.setRenderHint(QPainter::Antialiasing);
         painter.setRenderHint(QPainter::TextAntialiasing);
+        painter.setPen(color);
 
-        int size = image.height() * sizeR;
-
-        if (isBold)
-            painter.setFont(QFont(font, size, QFont::Bold));
+        if (isItalic)
+            painter.setFont(QFont(font, sizeR * image.height(), weightR * image.height(), isItalic));
         else
-            painter.setFont(QFont(font, size));
+            painter.setFont(QFont(font, sizeR * image.height(), weightR * image.height()));
 
-        if (isWhite)
-            painter.setPen(Qt::white);
-        else
-            painter.setPen(Qt::black);
+        int left = image.width() * leftR;
+        int top = image.height() * topR;
+        int right = image.width() * rightR;
+        int bottom = image.height() * bottomR;
+        QRect rect = image.rect().adjusted(left, top, -right, -bottom);
 
-        painter.drawText(result.width() * xR, result.height() * yR, text);
+        if (isShadowed) {
+            QColor shadowColor = QColor(0, 0, 0, 160);
+            QPoint offset(2, 2);
+            painter.setPen(shadowColor);
+            painter.drawText(rect.translated(offset), alignment, text);
+        }
+
+        painter.setPen(color);
+        painter.drawText(rect, alignment, text);
+
+        return result;
+    }
+
+    QImage Watermark::addLogo(const QImage image, const QImage logo, double sizeR, double xR, double yR) {
+        QImage result = image.copy();
+        QPainter painter(&result);
+        painter.setRenderHint(QPainter::SmoothPixmapTransform);
+        
+        int width = sizeR * logo.width();
+        int height = sizeR * logo.height();
+        QImage scaledLogo = logo.scaled(width, height, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+        int x = xR * image.width() - scaledLogo.width() / 2;
+        int y = yR * image.height() - scaledLogo.width() / 2;
+        painter.drawImage(x, y, scaledLogo);
 
         return result;
     }

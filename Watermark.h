@@ -42,7 +42,10 @@ private:
 
     QImage roundCorners(const QImage image, double radiusR);
 
-    QImage addText(QImage image, QString text, QString font, double sizeR, bool isBold, bool isWhite, double xR, double yR);
+    QImage addText(QImage image, const QString text, QString font, double sizeR, double weightR, bool isItalic, bool isShadowed, QColor color, Qt::Alignment alignment,
+        double leftR, double topR, double rightR, double bottomR);
+
+    QImage addLogo(const QImage image, const QImage logo, double sizeR, double xR, double yR);
 
 
 protected:
