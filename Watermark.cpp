@@ -28,6 +28,8 @@
         connect(ui->template1Button, &QPushButton::clicked, this, &Watermark::onTemplate1ButtonClicked);
         connect(ui->template2Button, &QPushButton::clicked, this, &Watermark::onTemplate2ButtonClicked);
         connect(ui->template3Button, &QPushButton::clicked, this, &Watermark::onTemplate3ButtonClicked);
+        connect(ui->template4Button, &QPushButton::clicked, this, &Watermark::onTemplate4ButtonClicked);
+
     }
 
     Watermark::~Watermark() {
@@ -73,7 +75,7 @@
         editedImage = image.copy();
         QImage background = image.copy();
         background.fill(Qt::white);
-        addBackground(&editedImage, &background, 0.03, 0.03, 0.5, 0.5);
+        addBackground(&editedImage, &background, 0.03, 0.03, 0.03, 0.03);
 
         apply();
     }
@@ -104,14 +106,41 @@
         double imageBottomR = 0.05 + static_cast<double>(image.height()) / base;
 
         addText(&editedImage, ui->ssLineEdit->text(), "Segoe UI", 0.04, 0.15, false, false,
-            Qt::white, Qt::AlignLeft | Qt::AlignVCenter, 0.2, imageBottomR, 0.2, 0.0);
+            color, Qt::AlignLeft | Qt::AlignVCenter, 0.2, imageBottomR, 0.2, 0.0);
 
         addText(&editedImage, ui->fLineEdit->text(), "Segoe UI", 0.04, 0.15, false, false,
-            Qt::white, Qt::AlignHCenter | Qt::AlignVCenter, 0.2, imageBottomR, 0.2, 0.0);
+            color, Qt::AlignHCenter | Qt::AlignVCenter, 0.2, imageBottomR, 0.2, 0.0);
 
         addText(&editedImage, ui->isoLineEdit->text(), "Segoe UI", 0.04, 0.15, false, false,
-            Qt::white, Qt::AlignRight | Qt::AlignVCenter, 0.2, imageBottomR, 0.2, 0.0);
+            color, Qt::AlignRight | Qt::AlignVCenter, 0.2, imageBottomR, 0.2, 0.0);
         
+        apply();
+    }
+
+    void Watermark::onTemplate4ButtonClicked() {
+        editedImage = image.copy();
+        QImage background = image.copy();
+        blur(&background);
+        addBackground(&editedImage, &background, 0.05, 0.05, 0.05, 0.3);
+
+        roundCorners(&editedImage, 0.03);
+
+        int base = std::min(image.width(), image.height());
+        double imageHR = static_cast<double>(image.height()) / base;
+        double imageVR = static_cast<double>(image.width()) / base;
+        addText(&editedImage, ui->ssLineEdit->text(), "Segoe UI", 0.03, 0.15, false, false,
+            color, Qt::AlignLeft | Qt::AlignVCenter, 0.3, imageHR + 0.2, 0.3, 0.0);
+
+        addText(&editedImage, ui->fLineEdit->text(), "Segoe UI", 0.03, 0.15, false, false,
+            color, Qt::AlignHCenter | Qt::AlignVCenter, 0.3, imageHR + 0.2, 0.3, 0.0);
+
+        addText(&editedImage, ui->isoLineEdit->text(), "Segoe UI", 0.03, 0.15, false, false,
+            color, Qt::AlignRight | Qt::AlignVCenter, 0.3, imageHR + 0.2, 0.3, 0.0);
+
+        QImage logo;
+        getLogo(&logo);
+        addLogo(&editedImage, &logo, 0.22, 0.05 + imageVR / 2.0, imageHR + 0.17);
+
         apply();
     }
 
@@ -236,19 +265,23 @@
         if (ui->brandComboBox->currentIndex() == 1)
             *logo = QImage(":/Watermark/images/nikonLogoText.png");
         else if (ui->brandComboBox->currentIndex() == 2)
+            *logo = QImage(":/Watermark/images/nikonLogoTextWhite.png");
+        else if (ui->brandComboBox->currentIndex() == 3)
             *logo = QImage(":/Watermark/images/canonLogo.png");
-
+        // TODO: Add more brand
     }
 
     void Watermark::addLogo(QImage* tar, const QImage* logo, double sizeR, double xR, double yR) {
         QPainter painter(tar);
         painter.setRenderHint(QPainter::SmoothPixmapTransform);
-        
-        int width = sizeR * image.width();
-        int height = sizeR * image.height();
+
+        int base = std::min(image.width(), image.height());
+        int width = sizeR * base;
+        int height = static_cast<double>(width) / logo->width() * logo->height();
         QImage scaledLogo = logo->scaled(width, height, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
-        int x = xR * image.width() - scaledLogo.width() / 2;
-        int y = yR * image.height() - scaledLogo.height() / 2;
+        int x = xR * base - scaledLogo.width() / 2;
+        int y = yR * base - scaledLogo.height() / 2;
+
         painter.drawImage(x, y, scaledLogo);
     }

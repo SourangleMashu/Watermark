@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>WatermarkClass</class>
+ <widget class="QMainWindow" name="WatermarkClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1080</width>
+    <height>827</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Watermark</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="Watermark.qrc">
+    <normaloff>:/Watermark/images/icon.png</normaloff>:/Watermark/images/icon.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QLabel" name="imageLabel">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <widget class="QWidget" name="textTab">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <attribute name="title">
+        <string>Simple Text</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_9">
+        <item>
+         <widget class="QLabel" name="textLabel">
+          <property name="text">
+           <string>Text:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="textSizeLabel">
+          <property name="text">
+           <string>Text Size:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSlider" name="textSizeSlider">
+          <property name="value">
+           <number>25</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="colorButton">
+          <property name="text">
+           <string>Color</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="transparencyLabel">
+          <property name="text">
+           <string>Transparency：</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSlider" name="transparencySlider">
+          <property name="maximum">
+           <number>255</number>
+          </property>
+          <property name="value">
+           <number>255</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="positionLabel">
+          <property name="text">
+           <string>Position:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSlider" name="ySlider">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>200</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Orientation::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSlider" name="xSlider">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>200</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="value">
+           <number>0</number>
+          </property>
+          <property name="tracking">
+           <bool>true</bool>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="invertedAppearance">
+           <bool>false</bool>
+          </property>
+          <property name="invertedControls">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="chooseButton">
+          <property name="text">
+           <string>Choose</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="applyButton">
+          <property name="text">
+           <string>Apply</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="saveButton">
+          <property name="text">
+           <string>Save</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="templateTab">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LayoutDirection::LeftToRight</enum>
+       </property>
+       <attribute name="title">
+        <string>Template</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_8">
+        <item>
+         <widget class="QToolBox" name="toolBox">
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="templatePage">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>200</width>
+             <height>636</height>
+            </rect>
+           </property>
+           <attribute name="label">
+            <string>Template</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_6">
+            <item>
+             <widget class="QScrollArea" name="scrollArea">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>50</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="widgetResizable">
+               <bool>true</bool>
+              </property>
+              <widget class="QWidget" name="scrollAreaWidgetContents">
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>0</y>
+                 <width>168</width>
+                 <height>640</height>
+                </rect>
+               </property>
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>10</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_7">
+                <item>
+                 <widget class="QPushButton" name="template1Button">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>100</height>
+                   </size>
+                  </property>
+                  <property name="baseSize">
+                   <size>
+                    <width>0</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="Watermark.qrc">
+                    <normaloff>:/Watermark/images/temp1.jpg</normaloff>:/Watermark/images/temp1.jpg</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>145</width>
+                    <height>115</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="template2Button">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="baseSize">
+                   <size>
+                    <width>0</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="Watermark.qrc">
+                    <normaloff>:/Watermark/images/temp2.jpg</normaloff>:/Watermark/images/temp2.jpg</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>145</width>
+                    <height>115</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="template3Button">
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="Watermark.qrc">
+                    <normaloff>:/Watermark/images/temp3.jpg</normaloff>:/Watermark/images/temp3.jpg</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>145</width>
+                    <height>115</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="template4Button">
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="Watermark.qrc">
+                    <normaloff>:/Watermark/images/temp4.jpg</normaloff>:/Watermark/images/temp4.jpg</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>170</width>
+                    <height>250</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="infoPage">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>200</width>
+             <height>636</height>
+            </rect>
+           </property>
+           <attribute name="label">
+            <string>Info</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_10">
+            <item>
+             <widget class="QGroupBox" name="groupBox">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="title">
+               <string>Shutter Speed:</string>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout">
+               <item>
+                <widget class="QLineEdit" name="ssLineEdit">
+                 <property name="text">
+                  <string>1/60</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="groupBox_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="title">
+               <string>Aperture:</string>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_2">
+               <item>
+                <widget class="QLineEdit" name="fLineEdit">
+                 <property name="text">
+                  <string>f4</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="groupBox_3">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="title">
+               <string>ISO:</string>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_3">
+               <item>
+                <widget class="QLineEdit" name="isoLineEdit">
+                 <property name="text">
+                  <string>800</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="groupBox_4">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="title">
+               <string>Brand:</string>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_4">
+               <item>
+                <widget class="QComboBox" name="brandComboBox">
+                 <item>
+                  <property name="text">
+                   <string>Choose Brand...</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Nikon (black)</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Nikon (white)</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Canon</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Sony</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="groupBox_5">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="title">
+               <string>Camera:</string>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_5">
+               <item>
+                <widget class="QLineEdit" name="cameraLineEdit">
+                 <property name="text">
+                  <string>Z6</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="groupBox_6">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="title">
+               <string>Lens:</string>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_11">
+               <item>
+                <widget class="QLineEdit" name="lensLineEdit">
+                 <property name="text">
+                  <string>24-120</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <spacer name="verticalSpacer">
+              <property name="orientation">
+               <enum>Qt::Orientation::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1080</width>
+     <height>33</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="Watermark.qrc"/>
+ </resources>
+ <connections/>
+</ui>
