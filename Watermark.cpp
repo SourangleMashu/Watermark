@@ -70,9 +70,10 @@
             return;
         }
 
+        editedImage = image.copy();
         QImage background = image.copy();
         background.fill(Qt::white);
-        editedImage = addMargin(image, background, 0.03, 0.03, 0.5, 0.5).copy();
+        addBackground(&editedImage, &background, 0.03, 0.03, 0.5, 0.5);
 
         apply();
     }
@@ -82,34 +83,35 @@
             return;
         }
 
-        QImage background = blurBackground(image).copy();
-
-        editedImage = addMargin(image, background, 0.1, 0.1, 0.5, 0.5).copy();
-        editedImage = roundCorners(editedImage, 0.02).copy();
+        editedImage = image.copy();
+        QImage background = image.copy();
+        blur(&background);
+        addBackground(&editedImage, &background, 0.1, 0.1, 0.1, 0.1);
+        roundCorners(&editedImage, 0.02);
 
         apply();
     }
 
     void Watermark::onTemplate3ButtonClicked() {
-        if (image.isNull()) {
-            return;
-        }
+        editedImage = image.copy();
+        QImage background = image.copy();
+        blur(&background);
+        addBackground(&editedImage, &background, 0.05, 0.05, 0.05, 0.2);
 
-        QImage background = blurBackground(image).copy();
+        roundCorners(&editedImage, 0.03);
 
-        editedImage = addMargin(image, background, 0.07, 0.15, 0.5, 0.4).copy();
-        editedImage = roundCorners(editedImage, 0.03).copy();
+        int base = std::min(image.width(), image.height());
+        double imageBottomR = 0.05 + static_cast<double>(image.height()) / base;
 
-        editedImage = addText(editedImage, ui->ssLineEdit->text(), "Segoe UI", 0.03, 0.1, false, true, Qt::white, Qt::AlignLeft | Qt::AlignBottom, 0.3, 0.0, 0.3, 0.05).copy();
-        editedImage = addText(editedImage, ui->fLineEdit->text(), "Segoe UI", 0.03, 0.1, false, true, Qt::white, Qt::AlignCenter | Qt::AlignBottom, 0.3, 0.0, 0.3, 0.05).copy();
-        editedImage = addText(editedImage, ui->isoLineEdit->text(), "Segoe UI", 0.03, 0.1, false, true, Qt::white, Qt::AlignRight | Qt::AlignBottom, 0.3, 0.0, 0.3, 0.05).copy();
+        addText(&editedImage, ui->ssLineEdit->text(), "Segoe UI", 0.04, 0.15, false, false,
+            Qt::white, Qt::AlignLeft | Qt::AlignVCenter, 0.2, imageBottomR, 0.2, 0.0);
 
-        QImage logo;
-        if (ui->brandComboBox->currentIndex() == 1)
-            logo = QImage(":/Watermark/images/nikonLogoText.png");
+        addText(&editedImage, ui->fLineEdit->text(), "Segoe UI", 0.04, 0.15, false, false,
+            Qt::white, Qt::AlignHCenter | Qt::AlignVCenter, 0.2, imageBottomR, 0.2, 0.0);
+
+        addText(&editedImage, ui->isoLineEdit->text(), "Segoe UI", 0.04, 0.15, false, false,
+            Qt::white, Qt::AlignRight | Qt::AlignVCenter, 0.2, imageBottomR, 0.2, 0.0);
         
-        editedImage = addLogo(editedImage, logo, 1.2, 0.5, 0.83);
-
         apply();
     }
 
@@ -134,6 +136,8 @@
                          textImage.height() * (1 - ui->ySlider->value() / 100.0),
                          ui->lineEdit->text());
 
+
+
         QPixmap pix(QPixmap::fromImage(textImage));
         
         ui->imageLabel->setPixmap(pix.scaled(ui->imageLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
@@ -141,78 +145,72 @@
         return;
     }
 
-    QImage Watermark::addMargin(const QImage image, const QImage background, 
-        const double xMarginRatio, const double yMarginRatio, const double centerXRatio, const double centerYRatio) {
+    void Watermark::addBackground(QImage *dest, const QImage *background, double topR, double leftR, double rightR, double bottomR) {
+        if (dest->isNull() || background->isNull()) {
+            return;
+        }
+        int base = std::min(image.width(), image.height());
+        QImage temp = dest->copy();
+        *dest = background->scaled(image.width() + leftR * base + rightR * base, image.height() + topR * base + bottomR * base);
 
-        QImage result;
-        int base = std::max(image.width(), image.height());
-        int xMargin = base * xMarginRatio;
-        int yMargin = base * yMarginRatio;
-        result = background.scaled(image.width() + xMargin * 2, image.height() + yMargin * 2);
+        QPainter painter(dest);
 
-        QPainter painter(&result);
-
-        int x = centerXRatio * result.width() - image.width() / 2;
-        int y = centerYRatio * result.height() - image.height() / 2;
-
-        painter.drawImage(x, y, image);
-
-        return result;
+        painter.drawImage(leftR * base, topR * base, temp);
     }
 
-    QImage Watermark::blurBackground(QImage image) {
-        QImage background = image.copy();
-
-        cv::Mat mat(background.height(), background.width(), CV_8UC4, (void*)background.bits(), background.bytesPerLine());
+    void Watermark::blur(QImage *image) {
+        if (image->isNull()) {
+            return;
+        }
+        cv::Mat mat(image->height(), image->width(), CV_8UC4, (void*)image->bits(), image->bytesPerLine());
         cv::Mat small;
         cv::resize(mat, small, cv::Size(), 0.10, 0.10);
         small.convertTo(small, -1, 0.9, 0);
         cv::GaussianBlur(small, small, cv::Size(0, 0), 15);
         cv::resize(small, mat, mat.size());
-        background = QImage((const uchar*)mat.data, mat.cols, mat.rows, mat.step, QImage::Format_ARGB32).copy();
-
-        return background;
+        *image = QImage((const uchar*)mat.data, mat.cols, mat.rows, mat.step, QImage::Format_ARGB32).copy();
     }
 
-    QImage Watermark::roundCorners(QImage image, double radiusR) {
-        if (image.isNull())
-            return QImage();
+    void Watermark::roundCorners(QImage *image, double radiusR) {
+        if (image->isNull())
+            return;
 
-        QImage result(image.size(), QImage::Format_ARGB32);
+        QImage result(image->size(), QImage::Format_ARGB32);
         result.fill(Qt::transparent);
 
         QPainter painter(&result);
         painter.setRenderHint(QPainter::Antialiasing, true);
 
         QPainterPath path;
-        int radius = qMin(image.width(), image.height()) * radiusR;
-        path.addRoundedRect(QRectF(0, 0, image.width(), image.height()), radius, radius);
+        int radius = qMin(image->width(), image->height()) * radiusR;
+        path.addRoundedRect(QRectF(0, 0, image->width(), image->height()), radius, radius);
         painter.setClipPath(path);
-        painter.drawImage(0, 0, image);
-
-        return result;
+        painter.drawImage(0, 0, *image);
+        *image = result;
     }
 
-    QImage Watermark::addText(QImage image, const QString text, QString font, double sizeR,double weightR, bool isItalic, bool isShadowed, QColor color, Qt::Alignment alignment,
+    void Watermark::addText(QImage *textImage, const QString text, QString font, double sizeR, double weightR, bool isItalic, bool isShadowed, QColor color, Qt::Alignment alignment,
         double leftR, double topR, double rightR, double bottomR) {
 
-        QImage result = image.copy();
 
-        QPainter painter(&result);
+        QPainter painter(textImage);
         painter.setRenderHint(QPainter::Antialiasing);
         painter.setRenderHint(QPainter::TextAntialiasing);
         painter.setPen(color);
 
-        if (isItalic)
-            painter.setFont(QFont(font, sizeR * image.height(), weightR * image.height(), isItalic));
-        else
-            painter.setFont(QFont(font, sizeR * image.height(), weightR * image.height()));
+        int base = std::min(image.height(), image.width());
 
-        int left = image.width() * leftR;
-        int top = image.height() * topR;
-        int right = image.width() * rightR;
-        int bottom = image.height() * bottomR;
-        QRect rect = image.rect().adjusted(left, top, -right, -bottom);
+        if (isItalic)
+            painter.setFont(QFont(font, sizeR * base, weightR * base, isItalic));
+        else
+            painter.setFont(QFont(font, sizeR * base, weightR * base));
+
+        int left = base * leftR;
+        int top = base * topR;
+        int right = base * rightR;
+        int bottom = base * bottomR;
+        
+        QRect rect(left, top, textImage->width() - left - right, textImage->height() - top - bottom);
 
         if (isShadowed) {
             QColor shadowColor = QColor(0, 0, 0, 160);
@@ -221,24 +219,36 @@
             painter.drawText(rect.translated(offset), alignment, text);
         }
 
+        //-------------------------------------------------------------------------------------
+        //QPen oldPen = painter.pen();
+        //QPen debugPen(QColor(255, 0, 0, 150));  // red, semi-transparent
+        //debugPen.setWidth(6);  // Thicker line
+        //painter.setPen(debugPen);
+        //painter.drawRect(rect);
+        //painter.setPen(oldPen);
+        //-------------------------------------------------------------------------------------
+
         painter.setPen(color);
         painter.drawText(rect, alignment, text);
-
-        return result;
     }
 
-    QImage Watermark::addLogo(const QImage image, const QImage logo, double sizeR, double xR, double yR) {
-        QImage result = image.copy();
-        QPainter painter(&result);
+    void Watermark::getLogo(QImage *logo) {
+        if (ui->brandComboBox->currentIndex() == 1)
+            *logo = QImage(":/Watermark/images/nikonLogoText.png");
+        else if (ui->brandComboBox->currentIndex() == 2)
+            *logo = QImage(":/Watermark/images/canonLogo.png");
+
+    }
+
+    void Watermark::addLogo(QImage* tar, const QImage* logo, double sizeR, double xR, double yR) {
+        QPainter painter(tar);
         painter.setRenderHint(QPainter::SmoothPixmapTransform);
         
-        int width = sizeR * logo.width();
-        int height = sizeR * logo.height();
-        QImage scaledLogo = logo.scaled(width, height, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        int width = sizeR * image.width();
+        int height = sizeR * image.height();
+        QImage scaledLogo = logo->scaled(width, height, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
         int x = xR * image.width() - scaledLogo.width() / 2;
-        int y = yR * image.height() - scaledLogo.width() / 2;
+        int y = yR * image.height() - scaledLogo.height() / 2;
         painter.drawImage(x, y, scaledLogo);
-
-        return result;
     }

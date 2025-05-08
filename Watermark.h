@@ -29,23 +29,22 @@ private:
     QImage image;
     QImage editedImage;
     QImage textImage;
-    QImage background;
     QColor color;
 
     void apply();
+    
+    void addBackground(QImage* dest, const QImage* background, double topR, double leftR, double rightR, double bottomR);
 
-    QImage addMargin(const QImage image, const QImage background,
-                     double xMarginRatio, double yMarginRatio,
-                     double centerXRatio, double centerYRatio);
+    void blur(QImage *image);
 
-    QImage blurBackground(const QImage image);
+    void roundCorners(QImage *image, double radiusR);
 
-    QImage roundCorners(const QImage image, double radiusR);
-
-    QImage addText(QImage image, const QString text, QString font, double sizeR, double weightR, bool isItalic, bool isShadowed, QColor color, Qt::Alignment alignment,
+    void addText(QImage *textImage, const QString text, QString font, double sizeR, double weightR, bool isItalic, bool isShadowed, QColor color, Qt::Alignment alignment,
         double leftR, double topR, double rightR, double bottomR);
 
-    QImage addLogo(const QImage image, const QImage logo, double sizeR, double xR, double yR);
+    void getLogo(QImage* logo);
+
+    void addLogo(QImage *tar, const QImage *logo, double sizeR, double xR, double yR);
 
 
 protected:
