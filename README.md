@@ -1,1 +1,19 @@
-![template1](images/temp1.png)
+# Watermark
+#### A simple program that allows adding simple text and templates to photos.
+---
+## Samples:
+Simple white border:
+
+<img src="images/temp1.jpg" width="800"/>
+
+White background + shooting configurations + Camera Brand:
+
+<img src="images/temp5.jpg" width="800"/>
+
+Blurry image background + shooting configurations:
+
+<img src="images/temp3.jpg" width="800"/>
+
+Blurry image background + shooting configurations + Camera Brand:
+
+<img src="images/temp4.jpg" height="800"/>
