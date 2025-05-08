@@ -22,6 +22,7 @@ private slots:
     void onTemplate2ButtonClicked();
     void onTemplate3ButtonClicked();
     void onTemplate4ButtonClicked();
+    void onTemplate5ButtonClicked();
 
 
 private:

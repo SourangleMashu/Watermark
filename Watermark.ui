@@ -65,7 +65,7 @@
           </size>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="textTab">
           <property name="sizePolicy">
@@ -279,9 +279,9 @@
                   <property name="geometry">
                    <rect>
                     <x>0</x>
-                    <y>0</y>
+                    <y>-276</y>
                     <width>188</width>
-                    <height>640</height>
+                    <height>784</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">
@@ -389,8 +389,25 @@
                      </property>
                      <property name="iconSize">
                       <size>
-                       <width>170</width>
+                       <width>145</width>
                        <height>250</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="template5Button">
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="icon">
+                      <iconset resource="Watermark.qrc">
+                       <normaloff>:/Watermark/images/temp5.jpg</normaloff>:/Watermark/images/temp5.jpg</iconset>
+                     </property>
+                     <property name="iconSize">
+                      <size>
+                       <width>145</width>
+                       <height>130</height>
                       </size>
                      </property>
                     </widget>
@@ -406,7 +423,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>170</width>
+                <width>220</width>
                 <height>528</height>
                </rect>
               </property>

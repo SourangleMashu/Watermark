@@ -29,7 +29,7 @@
         connect(ui->template2Button, &QPushButton::clicked, this, &Watermark::onTemplate2ButtonClicked);
         connect(ui->template3Button, &QPushButton::clicked, this, &Watermark::onTemplate3ButtonClicked);
         connect(ui->template4Button, &QPushButton::clicked, this, &Watermark::onTemplate4ButtonClicked);
-
+        connect(ui->template5Button, &QPushButton::clicked, this, &Watermark::onTemplate5ButtonClicked);
     }
 
     Watermark::~Watermark() {
@@ -142,6 +142,33 @@
         addLogo(&editedImage, &logo, 0.22, 0.05 + imageVR / 2.0, imageHR + 0.17);
 
         apply();
+    }
+
+    void Watermark::onTemplate5ButtonClicked() {
+        editedImage = image.copy();
+        QImage background = image.copy();
+        background.fill(Qt::white);
+        addBackground(&editedImage, &background, 0.05, 0.05, 0.05, 0.3);
+
+
+        int base = std::min(image.width(), image.height());
+        double imageHR = static_cast<double>(image.height()) / base;
+        double imageVR = static_cast<double>(image.width()) / base;
+        addText(&editedImage, ui->ssLineEdit->text(), "Segoe UI", 0.03, 0.15, false, false,
+            color, Qt::AlignLeft | Qt::AlignVCenter, 0.3, imageHR + 0.2, 0.3, 0.0);
+
+        addText(&editedImage, ui->fLineEdit->text(), "Segoe UI", 0.03, 0.15, false, false,
+            color, Qt::AlignHCenter | Qt::AlignVCenter, 0.3, imageHR + 0.2, 0.3, 0.0);
+
+        addText(&editedImage, ui->isoLineEdit->text(), "Segoe UI", 0.03, 0.15, false, false,
+            color, Qt::AlignRight | Qt::AlignVCenter, 0.3, imageHR + 0.2, 0.3, 0.0);
+
+        QImage logo;
+        getLogo(&logo);
+        addLogo(&editedImage, &logo, 0.22, 0.05 + imageVR / 2.0, imageHR + 0.17);
+
+        apply();
+
     }
 
     void Watermark::apply() {
