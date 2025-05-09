@@ -1,6 +1,10 @@
 # Watermark
 #### A simple program that allows adding text and templates to photos.
+
+<img src="images/ui.png" width="500"/>
+
 ---
+
 ## Samples:
 
 Blurry image background + shooting configurations + Camera Brand:
